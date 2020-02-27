@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>QWERTY</title>
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="./css/bootstrap/bootstrap.min.css" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/photon.css">	
+	
+    <!-- Javascript -->
+	<script>
+	//jQuery require
+	let $ = jQuery = require('jquery');
+	
+	//Table Sorter
+	require('tablesorter');
+	
+		
+	//IPC Messages
+	const ipc = require('electron').ipcRenderer;
+	
+	
+	//Create user object
+	const accountType = require('electron').remote.getGlobal('accountType'); // Get account type
+	const username = require('electron').remote.getGlobal('username'); // Get account type
+		
+	//DBHandler object
+	var DBHandlerClass = require('./src/DBHandler.js');
+	var DBHandler = new DBHandlerClass();
+	
+	
+	
+	//ContentMaganer or WebAdmin class object
+	var user;
+	if (accountType == "WebAdmin"){
+		//ContentManager Objectsss
+		var WebAdminClass = require('./src/WebAdmin.js');
+		user = new WebAdminClass(username);		
+	} else {
+		//ContentManager Object
+		var ContentManagerClass = require('./src/ContentManager.js');
+		user = new ContentManagerClass(username);
+	}
+	
+
+	
+	//Interaction functions(Button clicks)
+    //var render = require('./interact.js');
+	</script>
+	
+    <!-- All GUI interactions functions -->
+    <script src="interact.js"></script>
+	
+  </head>
+  <body>
+    <div class="window">
+
+      <!-- .toolbar-header sits at the top of your app -->
+      <header class="toolbar toolbar-header">
+          <div class="row">
+	          <div class="col">
+        	  	<h1 id="welcome" class="title-left">dwwd</h1>
+			  </div>
+	          <div class="col">
+        	  	<h1 class="title-right" id="logout-btn"><button class="btn btn-large btn-default">Logout</button></h1>
+			  </div>
+          </div>
+		  
+      </header>
+
+      <!-- Your app's content goes inside .window-content -->
+      <div class="window-content">
+        <div class="pane-group">
+			
+          <div class="pane pane-sm sidebar" id="side-nav">
+          </div>
+		  
+		  <div id="content" class="pane pane-bg"  >
+			  
+	      </div>
+		  
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+  	  //Load welcome message and inital content
+      $('#welcome').text("Welcome "+username);
+	  $( "#content" ).load("views/show-courses.html");
+	  
+	  //Load corresponding side navigation bar
+	  jQuery.ajaxSetup({async:false});
+	  let navigationLoadPath;
+	  if (accountType == "WebAdmin") {
+	  	navigationLoadPath = "views/webadmin-nav.html"
+	  } else {
+	  	navigationLoadPath = "views/contentmanager-nav.html"
+	  }
+	  $( "#side-nav" ).load(navigationLoadPath);
+	  jQuery.ajaxSetup({async:true});
+	  	  
+	  
+	  // Get all buttons with class="btn" inside the container
+	  var btns = document.getElementsByClassName("nav-group-item");
+
+	  // Loop through the buttons and add the active class to the current/clicked button
+	  for (var i = 0; i < btns.length; i++) {
+	    btns[i].addEventListener("click", function() {
+			//Load Content
+		  $( "#content" ).load(this.getAttribute("href"));
+			
+			//Change active class
+	      var current = document.getElementsByClassName("active");
+	      current[0].className = current[0].className.replace(" active", "");
+	      this.className += " active";
+	    });
+	  }
+	  
+	  //On log out click
+      $('#logout-btn').on('click', () => {
+	  	ipc.sendSync('logout');
+      });	  
+  </script>
+	  
+</html>

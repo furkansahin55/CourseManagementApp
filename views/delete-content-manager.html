@@ -1,0 +1,22 @@
+          <div class="pane-form">			  
+			<form>
+			  <div class="form-group">
+			    <label>Username</label> 
+			    <select id="username1" name="username1" class="form-control"> <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! BURAYI  DB YLE UYUMLU HALE GETIR                -->
+			    </select>
+			  </div>
+			  <div class="form-actions">
+			    <button id="deleteContentManagerButton" type="submit" class="btn btn-form btn-primary" >Delete Content Manager</button>
+			  </div>
+			</form>
+		  </div>
+		  <script>
+			user.deleteContentManagerHelper();	
+		  
+			$("#deleteContentManagerButton").click(function(e){
+				e.preventDefault();
+				deleteContentManagerClicked();
+			});
+	  
+	  
+		</script>

@@ -1,0 +1,145 @@
+<div class="pane-form">			  
+<form id="add-course-form">
+  <div class="form-group">
+    <label>Course Name</label>
+    <input name="courseName" type="text" class="form-control" >
+  </div>
+  <div class="form-group">
+    <label>Course Code</label>
+    <input name="courseCode" type="text" id="cCode" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Course Credit</label>
+    <input name="courseCredit" type="text" id="cCredit"  class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Course ECTS</label>
+    <input name="courseEcts" type="text" id="cEcts"  class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Course Prerequisite</label>
+    <input name="coursePrequirities" id="cPre"  type="text" class="form-control">
+  </div>
+  <div class="checkbox">
+    <label>
+      <input name="mandatory" type="checkbox"> Mandatory/Elective
+    </label>
+  </div>  
+  
+  
+  <div class="form-group" id="instructorsWrapper">
+    <label>Instructor Name #1</label>
+    <input type="text" class="form-control" name="instructors1">
+  </div>
+  <div class="btn-group">
+  	  <button class="btn btn-large btn-default" id="addInstructor">
+    	  <span class="icon icon-plus-circled"></span> Add Instructor
+  	  </button>
+  </div>
+  
+  <div class="form-group" id="assistantWrapper">
+    <label>Assistant Name #1</label>
+    <input type="text" class="form-control" name="assistants1">
+  </div>
+  <div class="btn-group">
+  	  <button class="btn btn-large btn-default" id="addAssistant">
+    	  <span class="icon icon-plus-circled"></span> Add Assistant
+  	  </button>
+  </div>
+  
+  <div class="form-group">
+    <label>Course Semester</label>
+    <input name="semester" type="text" id="cSemester"  class="form-control">
+  </div>
+  
+  <div class="checkbox">
+    <label>
+      <input name="active" type="checkbox"> Active/Inactive
+    </label>
+  </div>
+  
+  
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-form btn-primary" id="addCourseOK">OK</button>
+  </div>
+</form>
+</div>
+
+<script>
+	//Button click listener
+	$("#addCourseOK").click(function(e){
+		e.preventDefault();
+		//First control the form
+		if (!addCourseFormControl()) addCourseClicked();
+	});
+	
+	//Add instructor
+	var wrapperi   		= $("#instructorsWrapper"); //Fields wrapper
+	var add_button_instructor      = $("#addInstructor");
+	
+	var xi = 1; //initlal text box count
+	$(add_button_instructor).click(function(e){ //on add input button click
+		e.preventDefault();
+		xi++; //text box increment
+		$(wrapperi).append('<label>Instructor Name #'+xi+'</label><input type="text" name="instructors'+xi+'" class="form-control">'); //add input box
+	});
+	
+	
+	//Add assistant
+	var wrappera 		= $("#assistantWrapper"); //Fields wrapper
+	var add_button_assitant      = $("#addAssistant");
+	
+	var yi = 1; //initlal text box count
+	$(add_button_assitant).click(function(e){ //on add input button click
+		e.preventDefault();
+		yi++; //text box increment
+		$(wrappera).append('<label>Assitant Name #'+yi+'</label><input type="text" name="assistants'+yi+'" class="form-control">'); //add input box
+	});	
+	
+	//Form Control
+	function addCourseFormControl(){
+		var empty = false;
+		$('input[type="text"]').each(function(){
+			console.log();
+		   if($(this).val()=="" && $(this)[0]["name"]!="coursePrequirities" && !$(this)[0]["name"].includes("assistants")){
+			   empty=true;
+			   $(this).focus(); //Focus on field
+			   return false;
+		    }
+		 });
+		 		 
+		 if(empty==true){
+		 	alert("Please fill in the form");
+			return empty;
+		 } else {
+			 //Course code numeric check
+			 if (!$.isNumeric($("#cCode").val())){
+				 alert("Course Code have to be 3 digit numeric");
+				 empty = true;
+			 }
+			 //Course cCredit numeric check
+			 if (!$.isNumeric($("#cCredit").val())){
+				 alert("Course Credit have to be numeric");
+				 empty = true;
+			 }
+			 //Course cEcts numeric check
+			 if (!$.isNumeric($("#cEcts").val())){
+				 alert("Course Ects have to be numeric");
+				 empty = true;
+			 }
+			 //Course code numeric check
+			 var semesterVal = $("#cSemester").val();
+			 if (!$.isNumeric(semesterVal) || parseInt(semesterVal) < 1 || parseInt(semesterVal) > 8 ){
+				 alert("Course Semester have to be numeric (1 to 8)");
+				 empty = true;
+			 }
+			 return empty;
+		 }
+		 		
+		 
+	}
+	
+	
+	
+</script>

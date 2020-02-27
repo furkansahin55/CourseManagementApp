@@ -1,0 +1,31 @@
+{
+  "name": "qwertyApp",
+  "version": "1.0.0",
+  "description": "A minimal Electron application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/rebelsowl/qwertyApp",
+  "keywords": [
+    "Electron",
+    "quick",
+    "start",
+    "tutorial",
+    "demo"
+  ],
+  "author": "GitHub",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^4.0.7"
+  },
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "jquery": "^3.4.1",
+    "lodash": "^4.17.11",
+    "mysql2": "^1.6.5",
+    "nodemailer": "^6.2.1",
+    "tablesorter": "^2.31.1",
+    "wpapi": "^1.2.1"
+  }
+}
