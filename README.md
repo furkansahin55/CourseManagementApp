@@ -1,7 +1,7 @@
 # qwertyApp
 Course Managament App named qwerty that I made with my 3 other friends for Software Engineering Course.
 
-Electron applications needs nodejs and npm to run in development stage. When applications have been build it does not have any dependency.
+Project made with Node.js Electron Framework to leverage Cross-Platform Desktop application feature.
 
 
 ## To Use
